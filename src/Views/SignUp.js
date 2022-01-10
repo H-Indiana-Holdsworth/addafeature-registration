@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import AuthForm from '../Components/AuthForm';
-import { signInUser } from '../services/users';
+import { signUpUser } from '../services/users';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      await signInUser(email, password);
+      await signUpUser(email, password);
     } catch (e) {
       setErrorMessage('Sign in failed');
     }
@@ -20,7 +20,7 @@ export default function SignIn() {
 
   return (
     <>
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
       <div>
         <AuthForm
           email={email}
