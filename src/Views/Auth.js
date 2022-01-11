@@ -1,26 +1,40 @@
 import React from 'react';
 import { useState } from 'react';
 import AuthForm from '../Components/AuthForm';
-import { signUpUser } from '../services/users';
+import { signInUser, signUpUser } from '../services/users';
 
-export default function SignUp() {
+export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
+  const [type, setType] = useState('Sign In');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await signUpUser(email, password);
+      await signInUser(email, password);
+      type === 'Sign In' ? await signInUser(email, password) : await signUpUser(email, password);
     } catch (e) {
-      setErrorMessage('Sign up failed');
+      setErrorMessage('Sign in failed');
     }
   };
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h3
+        onClick={() => {
+          setType('Sign In');
+        }}
+      ></h3>
+
+      <h3
+        onClick={() => {
+          setType('Sign Up');
+        }}
+      ></h3>
+      <p>Type: {type}</p>
+      <h1>Sign In</h1>
       <div>
         <AuthForm
           email={email}
