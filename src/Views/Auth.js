@@ -2,8 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import AuthForm from '../Components/AuthForm';
 import { signInUser, signUpUser } from '../services/users';
+import classNames from 'classnames';
+import './Auth.css';
 
-export default function SignIn() {
+export default function Auth({ setCurrentUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
@@ -13,25 +15,28 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      await signInUser(email, password);
+      let resp = await signInUser(email, password);
       type === 'Sign In' ? await signInUser(email, password) : await signUpUser(email, password);
+      setCurrentUser(resp);
     } catch (e) {
-      setErrorMessage('Sign in failed');
+      setErrorMessage('Something went wrong, please, please try again.');
     }
   };
 
   return (
-    <>
+    <div className="links">
       <h3
         onClick={() => {
           setType('Sign In');
         }}
+        className={classNames({ active: type === 'Sign In' })}
       ></h3>
 
       <h3
         onClick={() => {
           setType('Sign Up');
         }}
+        className={classNames({ active: type === 'Sign Up' })}
       ></h3>
       <p>Type: {type}</p>
       <h1>Sign In</h1>
@@ -46,6 +51,6 @@ export default function SignIn() {
           handleSubmit={handleSubmit}
         />
       </div>
-    </>
+    </div>
   );
 }
