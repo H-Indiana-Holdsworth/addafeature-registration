@@ -15,8 +15,8 @@ export default function Auth({ setCurrentUser }) {
     e.preventDefault();
 
     try {
-      let resp = await signInUser(email, password);
-      type === 'Sign In' ? await signInUser(email, password) : await signUpUser(email, password);
+      const resp =
+        type === 'Sign In' ? await signInUser(email, password) : await signUpUser(email, password);
       setCurrentUser(resp);
     } catch (e) {
       setErrorMessage('Something went wrong, please, please try again.');
@@ -30,16 +30,19 @@ export default function Auth({ setCurrentUser }) {
           setType('Sign In');
         }}
         className={classNames({ active: type === 'Sign In' })}
-      ></h3>
+      >
+        Sign In
+      </h3>
 
       <h3
         onClick={() => {
           setType('Sign Up');
         }}
         className={classNames({ active: type === 'Sign Up' })}
-      ></h3>
+      >
+        Sign Up
+      </h3>
       <p>Type: {type}</p>
-      <h1>Sign In</h1>
       <div>
         <AuthForm
           email={email}
